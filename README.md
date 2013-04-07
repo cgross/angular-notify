@@ -3,6 +3,7 @@ angular-notify
 
 A minimalistic notification service for angular.
 
+[Live Demo](http://cgross.github.io/angular-notify/demo/)
 
 ### Dependencies
 
