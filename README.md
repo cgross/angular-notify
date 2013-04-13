@@ -14,7 +14,7 @@ A minimalistic notification service for angular.
 ### Using
 
 * Copy `dist/angular-notify.js` or `dist/angular-notify.min.js` and `dist/angular-notify.css` into your project and add them to your html. 
-* Add `notify` as a module dependency in your module creation call. 
+* Add `cgNotify` as a module dependency in your module creation call. 
 * Then call it like this:
 
 ```js

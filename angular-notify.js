@@ -1,6 +1,6 @@
-angular.module('notify',[]);
+angular.module('cgNotify',[]);
 
-angular.module('notify').factory('notify',['$timeout',function($timeout){
+angular.module('cgNotify').factory('notify',['$timeout',function($timeout){
 
 	var startTop = 50;
 	var verticalSpacing = 30;

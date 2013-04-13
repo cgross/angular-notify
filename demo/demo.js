@@ -1,5 +1,5 @@
 
-angular.module('app', ['notify']);
+angular.module('app', ['cgNotify']);
 
 angular.module('app').controller('DemoCtrl',function($scope,notify){
 
