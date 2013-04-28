@@ -1,6 +1,6 @@
-.notify-message {
+.cg-notify-message {
 	position:absolute;
-	right:20px;
+	right:10px;
 	top:-50px;
 	z-index: 9999;
 
@@ -8,8 +8,8 @@
 	font-weight: bold;
 	text-shadow:1px 1px 3px rgba(255,255,255,1),-1px -1px 3px rgba(255,255,255,1),0px 0px 7px white;
 
-	-webkit-transition: top 0.5s ease-out,opacity 0.5s ease-out 1.5s;
-	-moz-transition: top 0.5s ease-out,opacity 0.5s ease-out 1.5s;
-	-o-transition: top 0.5s ease-out,opacity 0.5s ease-out 1.5s;
-	transition: top 0.5s ease-out,opacity 0.5s ease-out 1.5s;
+	-webkit-transition: top 0.5s ease-out,opacity 0.5s ease-out 2s;
+	-moz-transition: top 0.5s ease-out,opacity 0.5s ease-out 2s;
+	-o-transition: top 0.5s ease-out,opacity 0.5s ease-out 2s;
+	transition: top 0.5s ease-out,opacity 0.5s ease-out 2s;
 }

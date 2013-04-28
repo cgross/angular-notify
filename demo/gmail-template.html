@@ -1,0 +1,32 @@
+<div class="gmail-template">
+
+	<style>
+		.gmail-template {
+			position:absolute;
+			left:0px;
+			right:0px;
+			top:-50px;
+			z-index: 9999;
+
+			-webkit-transition: top 0.5s ease-out,opacity 0.5s ease-out 4s; /* 4 sec delay for longer message visibility */
+			-moz-transition: top 0.5s ease-out,opacity 0.5s ease-out 4s;
+			-o-transition: top 0.5s ease-out,opacity 0.5s ease-out 4s;
+			transition: top 0.5s ease-out,opacity 0.5s ease-out 4s;
+
+			text-align: center;
+		}
+
+		.gmail-message {
+			margin:0px auto;
+			border:1px solid rgb(240, 195, 109);
+			background-color: rgb(249, 237, 190);
+			font-size: 13px;
+			font-weight: bold;
+			padding:2px 8px 2px 8px;
+		}
+
+	</style>
+
+	<span class="gmail-message">{{message}}</span>
+
+</div>

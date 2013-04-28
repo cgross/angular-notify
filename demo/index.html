@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
-  <link href="../angular-notify.css" rel="stylesheet">
+  <link href="../dist/angular-notify.css" rel="stylesheet">
 
 </head>
 <body ng-controller="DemoCtrl" style="padding-top:50px">
@@ -15,31 +15,45 @@
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <a class="brand" href="#">Title</a>
-        <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>
-        </ul>
+        <div class="container-fluid">
+          <a class="brand" href="#">Title</a>
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+        </div>
       </div>
     </div>    
 
     <div class="container-fluid">
       <div class="row-fluid">
 
-        <form class="form-inline">
+        <form class="span4 form-inline">
           <fieldset>
-            <input class="input-large" type="text" ng-model="text"></input>
-            <button class="btn" ng-click="test()">Test</button>
+            <legend>Demo</legend>
+            <label>Message</label>
+            <input type="text" ng-model="msg1">
+            <button class="btn" ng-click="demo1()">Try It</button>
           </fieldset>
-       </form>
+        </form>    
+
+        <form class="span4 form-inline">
+          <fieldset>
+            <legend>Custom Template (similar to Gmail)</legend>
+            <label>Message</label>
+            <input type="text" ng-model="msg2">
+            <button class="btn" ng-click="demo2()">Try It</button>
+          </fieldset>
+        </form>      
+
       </div>
     </div>
   </div>
 
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-  <script src="../angular-notify.js"></script>
+  <script src="../dist/angular-notify.js"></script>
   <script src="demo.js"></script> 
 
 </body>
