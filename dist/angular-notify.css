@@ -1,5 +1,5 @@
 .cg-notify-message {
-	position:absolute;
+	position:fixed;
 	right:10px;
 	top:-50px;
 	z-index: 9999;

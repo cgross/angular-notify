@@ -38,7 +38,13 @@ angular.module('cgNotify').factory('notify',['$timeout','cgNotifyTemplateName','
 				});	
 
 				$('body').append(templateElement);	
-				messageElements.push(templateElement);	
+				messageElements.push(templateElement);
+
+				if (args.position === 'center'){
+					$timeout(function(){
+						templateElement.css('margin-left','-' + (templateElement.outerWidth() /2) + 'px');
+					});
+				}					
 
 				$timeout(function(){
 					var j = 0;

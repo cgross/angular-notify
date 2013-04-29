@@ -37,6 +37,7 @@ The `notify` service can either be passed a string or an object.  When passing a
 * `message` - Required.  The message to show.
 * `template` - Optional.  A custom template for the UI of the message.
 * `scope` - Optional.  An object containing values that will be placed on the scope of the message template.  Useful when providing custom templates.
+* `position` - Optional.  Currently `center` is the only acceptable value.  This will calculate and apply the correct negative `margin-left` offset needed to center a fixed positioned div.
 
 ## Providing Custom Templates
 

@@ -10,7 +10,7 @@ angular.module('app').controller('DemoCtrl',function($scope,notify){
 	};
 
 	$scope.demo2 = function(){
-		notify({message:$scope.msg2,template:'gmail-template.html',scope:{test:123}});
+		notify({message:$scope.msg2,template:'gmail-template.html',position:'center'});
 	};
 
 });
