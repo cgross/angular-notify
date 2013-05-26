@@ -5,6 +5,8 @@ A minimalistic notification service for angular.
 
 [Live Demo](http://cgross.github.io/angular-notify/demo/)
 
+Supports IE 10, and recent versions of FF and Chrome.
+
 ## Dependencies
 
 * JQuery
