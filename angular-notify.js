@@ -1,12 +1,11 @@
-angular.module('cgNotify',[]);
-
-angular.module('cgNotify').value('cgNotifyTemplateName','angular-notify.html');
-
-angular.module('cgNotify').factory('notify',['$timeout','cgNotifyTemplateName','$http','$compile','$templateCache','$rootScope',
-	function($timeout,cgNotifyTemplateName,$http,$compile,$templateCache,$rootScope){
+angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','$templateCache','$rootScope',
+	function($timeout,$http,$compile,$templateCache,$rootScope){
 
 		var startTop = 10;
-		var verticalSpacing = 30;
+		var verticalSpacing = 5;
+		var duration = 4000;
+		var defaultTemplate = 'angular-notify.html';
+		var position = 'right';
 
 		var messageElements = [];
 
@@ -16,58 +15,80 @@ angular.module('cgNotify').factory('notify',['$timeout','cgNotifyTemplateName','
 				args = {message:args};
 			}
 
-			args.template = args.template ? args.template : cgNotifyTemplateName;
+			args.template = args.template ? args.template : defaultTemplate;
+			args.position = args.position ? args.position : position;
 
 			$http.get(args.template,{cache: $templateCache}).success(function(template){
 
-				var scope = $rootScope.$new();
-				scope.message = args.message;
+				var scope = args.scope ? args.scope.$new() : $rootScope.$new();
 
-				if (typeof args.scope === 'object'){
-					for (var key in args.scope){
-						scope[key] = args.scope[key];
-					}
-				}
+				scope.$message = args.message;
 
 				var templateElement = $compile(template)(scope);
 				templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
-					if (e.originalEvent.propertyName === 'opacity'){
-						templateElement.remove();
-						templateElement.splice(messageElements.indexOf(templateElement),1);
-					}
-				});	
+					if (e.propertyName === 'opacity' ||
+						(e.originalEvent && e.originalEvent.propertyName === 'opacity')){
 
-				$('body').append(templateElement);	
+						templateElement.remove();
+						messageElements.splice(messageElements.indexOf(templateElement),1);
+						layoutMessages();
+					}
+				});
+
+				angular.element(document.body).append(templateElement);
 				messageElements.push(templateElement);
 
 				if (args.position === 'center'){
 					$timeout(function(){
-						templateElement.css('margin-left','-' + (templateElement.outerWidth() /2) + 'px');
+						templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
 					});
-				}					
+				}
 
-				$timeout(function(){
+				scope.$close = function(){
+					templateElement.css('opacity',0);
+				};
+
+				var layoutMessages = function(){
 					var j = 0;
+					var currentY = startTop;
 					for(var i = messageElements.length - 1; i >= 0; i --){
 						var element = messageElements[i];
-						var top = startTop + (j * verticalSpacing);
+						var top = currentY;
+						currentY += messageElements[i][0].offsetHeight + verticalSpacing;
 						element.css('top',top + 'px');
-						if (element.css('opacity') === '1'){
-							element.css('opacity',0);
-						}
 						j ++;
 					}
-				});						
+				};
+
+				$timeout(function(){
+					layoutMessages();
+				});
+
+				if (duration > 0){
+					$timeout(function(){
+						scope.$close();
+					},duration);
+				}
 
 			}).error(function(data){
 					throw new Error('Template specified for cgNotify ('+args.template+') could not be loaded. ' + data);
 			});
-			
+
 		};
 
 		notify.config = function(args){
 			startTop = args.top ? args.top : startTop;
 			verticalSpacing = args.verticalSpacing ? args.verticalSpacing : verticalSpacing;
+			duration = args.duration ? args.duration : duration;
+			defaultTemplate = args.template ? args.template : defaultTemplate;
+			position = args.position ? args.position : position;
+		};
+
+		notify.closeAll = function(){
+			for(var i = messageElements.length - 1; i >= 0; i --){
+				var element = messageElements[i];
+				element.css('opacity',0);
+			}
 		};
 
 		return notify;

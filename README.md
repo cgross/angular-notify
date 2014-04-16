@@ -1,68 +1,81 @@
-angular-notify
-==============
+#angular-notify
 
-A minimalistic notification service for angular.
+>A minimalistic (and extensible) notification service for Angular.
 
 [Live Demo](http://cgross.github.io/angular-notify/demo/)
 
 Supports IE 10, and recent versions of FF and Chrome.
 
-## Dependencies
+## Getting Started
 
-* JQuery
-* Angular (obviously)
+Install with Bower or download the the files directly from the dist folder in the repo.
 
-## Using
+```bash
+bower install angular-notify --save
+```
 
-* Copy `dist/angular-notify.js` and `dist/angular-notify.css` (or the min versions) into your project and add them to your index.html. 
-* Add `cgNotify` as a module dependency in your module creation call. 
-* Then call it like this:
+Add `dist/angular-notify.js` and `dist/angular-notify.css` to your index.html.
+
+Add `cgNotify` as a module dependency for your module.
+
+```js
+angular.module('your_app', ['cgNotify']);
+```
+
+Then inject and use the `notify` service.
 
 ```js
 function myController($scope,notify){  // <-- Inject notify
 
-  $scope.myMethod = function(){
-    
-    notify('Your notification message'); // <-- Call notify with your message
+  notify('Your notification message'); // <-- Call notify with your message
 
-    notify({message:'My message',template:'my_template.html',scope:{ extraStuff: 'abc' } )
-    
-  };
+  notify({ message:'My message', template:'my_template.html'} );
 
 }
 ```
 
-## Options 
+## Options
 
-The `notify` service can either be passed a string or an object.  When passing an object, the object parameters can be:
+
+### notify(String|Object)
+
+The `notify` function can either be passed a string or an object.  When passing an object, the object parameters can be:
 
 * `message` - Required.  The message to show.
 * `template` - Optional.  A custom template for the UI of the message.
-* `scope` - Optional.  An object containing values that will be placed on the scope of the message template.  Useful when providing custom templates.
+* `scope` - Optional.  A valid Angular scope object.  The scope of the template will be created by calling `$new()` on this scope.
 * `position` - Optional.  Currently `center` is the only acceptable value.  This will calculate and apply the correct negative `margin-left` offset needed to center a fixed positioned div.
+
+### notify.config(Object)
+
+Call `config` to set the default configuration options for angular-notify.  The following options may be specified in the given object:
+
+* `duration` - The default duration (in milliseconds) of each message.
+* `startTop` - The Y pixel value where messages will be shown.
+* `verticalSpacing` - The number of pixels that should be reserved between messages vertically.
+* `template` - The default message template.
+* `position` - The default position of each message.  Currently only `center` and `right` are the supported values.
+
+### notify.closeAll()
+
+Closes all currently open notifications.
 
 ## Providing Custom Templates
 
-You can define custom templates per message(as shown above) or change the global default template.  To change the global default template just provide a new 
-`$injector` value for `cgNotifyTemplateName`.  Ex:
+Angular-notify comes with a very simplistic default notification template.  You are encouraged to create your own template and style it appropriate to your application.  Templates can also contain more advanced features like buttons or links.  The message templates are full Angular partials that have a scope (and a controller if you use `ng-controller="YourCtrl"`).
 
- ```js
-angular.module('yourapp').value('cgNotifyTemplateName','your_custom_template_here.html');
-```
+The scope for the partial will either be descended from `$rootScope` or the scope specified in your `notify({...})` options.  Regardless, the template scope will be augmented with a special `$close()` function that you may use to close the notification.
 
-Templates are full, normal Angular partials and are placed on a new scope descending from `$rootScope`.  You may provide other data for the scope by using the `scope` parameter mentioned above.
-
-## Configuring
-
-Call `notify.config' to change the default top location and vertical spacing ala:
-
-```js
-  notify.config({top:100,verticalSpacing:50});
-```
-
-The animated transitions implemented using CSS3 transitions (no IE<10 support).  The duration of the message visibility is controlled by the delay of the opacity transition.  You may therefore alter this delay to keep messages visible for longer.
 
 ## Release History
-
+ * v1.0.0 - 4/16/2014 - Significant refactoring.  
+  * JQuery is no longer a required dependency.
+  * [Breaking Change] Configure the default template using `config()` now instead of the `cgNotifyTemplate` value.
+  * [Breaking Change] The `verticalSpacing` parameter should no longer include the height of the notification element.
+  * [Breaking Change] The `scope` options must now be a valid Angular scope.
+  * [Breaking Change] The duration of the notifications is now based on a `duration` config property and does not rely on the delay attribute of the CSS transition.
+  * Messages can now word wrap if you use a `max-width` css value.
+  * The scope for templates now includes a `$close()` function.
+  * New `notify.closeAll()` method.
  * v0.2.0 - Adding custom templates ability, fixed FF bug.
  * v0.1.0 - Initial release.

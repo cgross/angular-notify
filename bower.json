@@ -1,0 +1,36 @@
+{
+  "name": "angular-notify",
+  "main": [
+    "dist/angular-notify.js",
+    "dist/angular-notify.css"
+  ],
+  "version": "1.0.0",
+  "homepage": "https://github.com/cgross/angular-notify",
+  "authors": [
+    "Chris Gross <schtoo@schtoo.com>"
+  ],
+  "description": "A minimalistic notification service for Angular apps.",
+  "keywords": [
+    "angular",
+    "notify",
+    "notifications"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "temp",
+    "./angular-notify.css",
+    "./angular-notify.html",
+    "./angular-notify.js",
+    "Gruntfile.js",
+    "package.json",
+    "demo"
+  ],
+  "dependencies": {
+    "angular": "~1.2.16"
+  }
+}

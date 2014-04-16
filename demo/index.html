@@ -5,56 +5,107 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="../dist/angular-notify.css" rel="stylesheet">
 
 </head>
-<body ng-controller="DemoCtrl" style="padding-top:50px">
+<body ng-controller="DemoCtrl" style="padding-top:60px">
 
   <div>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">Title</a>
-          <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-          </ul>
-        </div>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Brand</a>
       </div>
-    </div>    
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Link</a></li>
+          <li><a href="#">Link</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="navbar-form navbar-left" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
 
     <div class="container-fluid">
-      <div class="row-fluid">
+      <div class="row">
 
-        <form class="span4 form-inline">
-          <fieldset>
+        <div class="col-md-4">
+
+          <form class="form-inline" role="form">
             <legend>Demo</legend>
-            <label>Message</label>
-            <input type="text" ng-model="msg1">
-            <button class="btn" ng-click="demo1()">Try It</button>
-          </fieldset>
-        </form>    
+            <div class="form-group">
+              <label class="control-label" for="message1">Message</label>
+              <input type="text" class="form-control" id="message1" placeholder="message" ng-model="msg1">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="demo1()">Try It</button>
+          </form>
 
-        <form class="span4 form-inline">
-          <fieldset>
+          <br/><br/>
+
+          <form class="form-inline" role="form">
             <legend>Custom Template (similar to Gmail)</legend>
-            <label>Message</label>
-            <input type="text" ng-model="msg2">
-            <button class="btn" ng-click="demo2()">Try It</button>
-          </fieldset>
-        </form>      
+            <p class="help-block">This custom template also allows you to close the messages by clicking on them.</p>
+            <div class="form-group">
+              <label class="control-label" for="message2">Message</label>
+              <input type="text" class="form-control" id="message2" placeholder="message" ng-model="msg2">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="demo2()">Try It</button>
+          </form>
+
+          <br/><br/>
+
+          <form class="form-inline" role="form">
+            <legend>Another Custom Template</legend>
+            <p class="help-block">This template has the ability to show custom buttons passed on the optional scope.</p>
+            <div class="form-group">
+              <label class="control-label" for="message3">Message</label>
+              <input type="text" class="form-control" id="message3" placeholder="message" ng-model="msg3">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="demo3()">Try It</button>
+          </form>
+
+          <br/><br/><br/>
+
+          <button class="btn btn-default" ng-click="closeAll()">Close All</button>
+
+        </div>
 
       </div>
     </div>
   </div>
 
-  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
   <script src="../dist/angular-notify.js"></script>
-  <script src="demo.js"></script> 
+  <script src="demo.js"></script>
 
 </body>
 </html>

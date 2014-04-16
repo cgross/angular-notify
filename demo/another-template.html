@@ -1,7 +1,7 @@
-<div class="gmail-template" ng-click="$close()">
+<div class="another-template">
 
 	<style>
-		.gmail-template {
+		.another-template {
 			position:fixed;
 			left:50%;
 			top:-50px;
@@ -9,10 +9,9 @@
 			max-width:400px;
 			text-align: center;
 
-			border:1px solid rgb(240, 195, 109);
-			background-color: rgb(249, 237, 190);
-			font-size: 13px;
-			font-weight: bold;
+			border:1px solid #e1e1e8;
+			background-color: #f7f7f9;
+			font-size: 18px;
 			padding:2px 8px 2px 8px;
 
 			-webkit-transition: top 0.5s ease-out,opacity 0.5s ease-out;
@@ -23,6 +22,11 @@
 
 	</style>
 
-	{{$message}}
+	<div>
+		<span>{{$message}}<span>
+		</div>
+	<div>
+		<button class="btn btn-default btn-xs" ng-repeat="button in buttons" ng-click="button.callback()" style="margin-right:4px">{{button.name}}</button>
+	</div>
 
 </div>

@@ -1,52 +1,35 @@
 'use strict';
-var path = require('path');
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
-
-var folderMount = function folderMount(connect, point) {
-  return connect.static(path.resolve(point));
-};
 
 module.exports = function (grunt) {
-  // Project configuration.
+
+  require('load-grunt-tasks')(grunt);
+
   grunt.initConfig({
     connect: {
-      livereload: {
+      main: {
         options: {
-          port: 9001,
-          middleware: function(connect, options) {
-            return [lrSnippet, folderMount(connect, options.base)]
-          }
+          port: 9001
         }
       }
     },
-    regarde: {
-      all: {
-        files: ['**/*'],
-        tasks: ['livereload']
+    watch: {
+      main: {
+        options: {
+            livereload: true,
+            livereloadOnError: false,
+            spawn: false
+        },
+        files: ['angular-notify.css','angular-notify.html','angular-notify.js','dist/**/*','demo/**/*'],
+        tasks: ['jshint','build']
       }
     },
     jshint: {
-      options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        browser: true,
-        smarttabs: true,
-        globals: {
-          jQuery: true,
-          angular: true,
-          console: true,
-          $: true
-        }
-      },
-      files: ['angular-notify.js']
+      main: {
+        options: {
+            jshintrc: '.jshintrc'
+        },
+        src: 'angular-notify.js'
+      }
     },
     jasmine: {
       unit: {
@@ -72,13 +55,13 @@ module.exports = function (grunt) {
         src:'angular-notify.html',
         dest: 'temp/templates.js'
       }
-    },   
+    },
    concat: {
       main: {
         src: ['angular-notify.js', 'temp/templates.js'],
         dest: 'dist/angular-notify.js'
       }
-    },    
+    },
     uglify: {
       main: {
         files: [
@@ -92,21 +75,11 @@ module.exports = function (grunt) {
           'dist/angular-notify.min.css': 'dist/angular-notify.css'
         }
       }
-    }    
+    }
   });
 
-  grunt.loadNpmTasks('grunt-regarde');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-livereload');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-jasmine');
-  grunt.loadNpmTasks('grunt-angular-templates');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-
-  grunt.registerTask('server', ['livereload-start','jshint','connect', 'regarde']);
-  grunt.registerTask('build',['copy','ngtemplates','concat','uglify','cssmin']);
+  grunt.registerTask('serve', ['jshint','connect', 'watch']);
+  grunt.registerTask('build',['ngtemplates','concat','uglify','copy','cssmin']);
+  grunt.registerTask('test',['build','jasmine']);
 
 };
