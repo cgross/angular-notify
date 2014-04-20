@@ -6,6 +6,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 		var duration = 4000;
 		var defaultTemplate = 'angular-notify.html';
 		var position = 'right';
+		var container = document.body;
 
 		var messageElements = [];
 
@@ -17,6 +18,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
 			args.template = args.template ? args.template : defaultTemplate;
 			args.position = args.position ? args.position : position;
+			args.container = args.container ? args.container : container;
 
 			$http.get(args.template,{cache: $templateCache}).success(function(template){
 
@@ -35,7 +37,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 					}
 				});
 
-				angular.element(document.body).append(templateElement);
+				angular.element(args.container).append(templateElement);
 				messageElements.push(templateElement);
 
 				if (args.position === 'center'){
@@ -82,6 +84,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 			duration = args.duration ? args.duration : duration;
 			defaultTemplate = args.template ? args.template : defaultTemplate;
 			position = args.position ? args.position : position;
+			container = args.container ? args.container : container;
 		};
 
 		notify.closeAll = function(){

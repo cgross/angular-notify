@@ -45,6 +45,7 @@ The `notify` function can either be passed a string or an object.  When passing 
 * `template` - Optional.  A custom template for the UI of the message.
 * `scope` - Optional.  A valid Angular scope object.  The scope of the template will be created by calling `$new()` on this scope.
 * `position` - Optional.  Currently `center` is the only acceptable value.  This will calculate and apply the correct negative `margin-left` offset needed to center a fixed positioned div.
+* `container` - Optional.  Element that contains each notification.  Defaults to `document.body`.
 
 ### notify.config(Object)
 
@@ -55,6 +56,7 @@ Call `config` to set the default configuration options for angular-notify.  The 
 * `verticalSpacing` - The number of pixels that should be reserved between messages vertically.
 * `template` - The default message template.
 * `position` - The default position of each message.  Currently only `center` and `right` are the supported values.
+* `container` - The default element that contains each notification.  Defaults to `document.body`.
 
 ### notify.closeAll()
 
