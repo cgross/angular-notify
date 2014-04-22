@@ -17,6 +17,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
 			args.template = args.template ? args.template : defaultTemplate;
 			args.position = args.position ? args.position : position;
+			args.container = args.container ? args.container : document.body;
 
 			$http.get(args.template,{cache: $templateCache}).success(function(template){
 
@@ -35,7 +36,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 					}
 				});
 
-				angular.element(document.body).append(templateElement);
+				angular.element(args.container).append(templateElement);
 				messageElements.push(templateElement);
 
 				if (args.position === 'center'){
