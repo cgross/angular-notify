@@ -20,11 +20,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 			args.position = args.position ? args.position : position;
 			args.container = args.container ? args.container : container;
 
+            var scope = args.scope ? args.scope.$new() : $rootScope.$new();
+            scope.$message = args.message;
+
 			$http.get(args.template,{cache: $templateCache}).success(function(template){
-
-				var scope = args.scope ? args.scope.$new() : $rootScope.$new();
-
-				scope.$message = args.message;
 
 				var templateElement = $compile(template)(scope);
 				templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
@@ -76,14 +75,33 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 					throw new Error('Template specified for cgNotify ('+args.template+') could not be loaded. ' + data);
 			});
 
+            var retVal = {};
+            
+            retVal.close = function(){
+                if (scope.$close){
+                    scope.$close();
+                }
+            };
+
+            Object.defineProperty(retVal,'message',{
+                get: function(){
+                    return scope.$message;
+                },
+                set: function(val){
+                    scope.$message = val;
+                }
+            });
+
+            return retVal;
+
 		};
 
 		notify.config = function(args){
-			startTop = args.top ? args.top : startTop;
-			verticalSpacing = args.verticalSpacing ? args.verticalSpacing : verticalSpacing;
-			duration = args.duration ? args.duration : duration;
+			startTop = !angular.isUndefined(args.top) ? args.top : startTop;
+			verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
+			duration = !angular.isUndefined(args.duration) ? args.duration : duration;
 			defaultTemplate = args.template ? args.template : defaultTemplate;
-			position = args.position ? args.position : position;
+			position = !angular.isUndefined(args.position) ? args.position : position;
 			container = args.container ? args.container : container;
 		};
 

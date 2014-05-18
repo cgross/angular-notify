@@ -47,6 +47,8 @@ The `notify` function can either be passed a string or an object.  When passing 
 * `position` - Optional.  Currently `center` is the only acceptable value.  This will calculate and apply the correct negative `margin-left` offset needed to center a fixed positioned div.
 * `container` - Optional.  Element that contains each notification.  Defaults to `document.body`.
 
+This function will return an object with a `close()` method and a `message` property.
+
 ### notify.config(Object)
 
 Call `config` to set the default configuration options for angular-notify.  The following options may be specified in the given object:
@@ -70,6 +72,7 @@ The scope for the partial will either be descended from `$rootScope` or the scop
 
 
 ## Release History
+ * v1.1.0 - 5/18/2014 - Added return value allowing for closing and updating of message.
  * v1.0.0 - 4/16/2014 - Significant refactoring.  
   * JQuery is no longer a required dependency.
   * [Breaking Change] Configure the default template using `config()` now instead of the `cgNotifyTemplate` value.
