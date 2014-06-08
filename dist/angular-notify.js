@@ -97,7 +97,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 		};
 
 		notify.config = function(args){
-			startTop = !angular.isUndefined(args.top) ? args.top : startTop;
+			startTop = !angular.isUndefined(args.startTop) ? args.startTop : startTop;
 			verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
 			duration = !angular.isUndefined(args.duration) ? args.duration : duration;
 			defaultTemplate = args.template ? args.template : defaultTemplate;
@@ -120,8 +120,10 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('angular-notify.html',
-    "<div class=\"cg-notify-message\">\n" +
-    "\t{{$message}}\n" +
+    "<div class=\"cg-notify-message\">\r" +
+    "\n" +
+    "\t{{$message}}\r" +
+    "\n" +
     "</div>"
   );
 
