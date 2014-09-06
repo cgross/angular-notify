@@ -116,7 +116,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         };
 
         notify.config = function(args){
-            startTop = !angular.isUndefined(args.top) ? args.top : startTop;
+            startTop = !angular.isUndefined(args.startTop) ? args.startTop : startTop;
             verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
             duration = !angular.isUndefined(args.duration) ? args.duration : duration;
             defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;

@@ -76,6 +76,7 @@ The `messageTemplate` property is also included on the scope as `$messageTemplat
 
 
 ## Release History
+ * v2.0.1 - 09/06/2014 - Fixed #4 (config() not correctly setting startTop).
  * v2.0.0 - 09/06/2014
    * Default template redesigned with a Bootstrap look and feel.  Default template now also includes a close button.
    * Default message location is now the top center.
