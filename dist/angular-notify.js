@@ -3,9 +3,9 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
 		var startTop = 10;
 		var verticalSpacing = 5;
-		var duration = 4000;
-		var defaultTemplate = 'angular-notify.html';
-		var position = 'right';
+		var duration = 10000;
+		var defaultTemplateUrl = 'angular-notify.html';
+		var position = 'center';
 		var container = document.body;
 
 		var messageElements = [];
@@ -16,14 +16,17 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 				args = {message:args};
 			}
 
-			args.template = args.template ? args.template : defaultTemplate;
+			args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
 			args.position = args.position ? args.position : position;
 			args.container = args.container ? args.container : container;
+            args.classes = args.classes ? args.classes : '';
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$message = args.message;
+            scope.$classes = args.classes;
+            scope.$messageTemplate = args.messageTemplate;
 
-			$http.get(args.template,{cache: $templateCache}).success(function(template){
+			$http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
 
 				var templateElement = $compile(template)(scope);
 				templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
@@ -35,6 +38,21 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 						layoutMessages();
 					}
 				});
+
+                if (args.messageTemplate){
+                    var messageTemplateElement;
+                    for (var i = 0; i < templateElement.children().length; i ++){
+                        if (angular.element(templateElement.children()[i]).hasClass('cg-notify-message-template')){
+                            messageTemplateElement = angular.element(templateElement.children()[i]);
+                            break;
+                        }
+                    }
+                    if (messageTemplateElement){
+                        messageTemplateElement.append($compile(args.messageTemplate)(scope));
+                    } else {
+                        throw new Error('cgNotify could not find the .cg-notify-message-template element in '+args.templateUrl+'.');
+                    }
+                }
 
 				angular.element(args.container).append(templateElement);
 				messageElements.push(templateElement);
@@ -54,9 +72,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 					var currentY = startTop;
 					for(var i = messageElements.length - 1; i >= 0; i --){
 						var element = messageElements[i];
-						var top = currentY;
-						currentY += messageElements[i][0].offsetHeight + verticalSpacing;
-						element.css('top',top + 'px');
+                        var height = element[0].offsetHeight;
+                        var top = currentY + height;
+						currentY += height + verticalSpacing;
+						element.css('top',top + 'px').css('margin-top','-' + height + 'px').css('visibility','visible');
 						j ++;
 					}
 				};
@@ -72,7 +91,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 				}
 
 			}).error(function(data){
-					throw new Error('Template specified for cgNotify ('+args.template+') could not be loaded. ' + data);
+					throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
 			});
 
             var retVal = {};
@@ -100,7 +119,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 			startTop = !angular.isUndefined(args.top) ? args.top : startTop;
 			verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
 			duration = !angular.isUndefined(args.duration) ? args.duration : duration;
-			defaultTemplate = args.template ? args.template : defaultTemplate;
+			defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
 			position = !angular.isUndefined(args.position) ? args.position : position;
 			container = args.container ? args.container : container;
 		};
@@ -120,8 +139,21 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('angular-notify.html',
-    "<div class=\"cg-notify-message\">\n" +
-    "\t{{$message}}\n" +
+    "<div class=\"cg-notify-message\" ng-class=\"$classes\">\n" +
+    "\n" +
+    "    <div ng-show=\"!$messageTemplate\">\n" +
+    "        {{$message}}\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div ng-show=\"$messageTemplate\" class=\"cg-notify-message-template\">\n" +
+    "        \n" +
+    "    </div>\n" +
+    "\n" +
+    "    <button type=\"button\" class=\"cg-notify-close\" ng-click=\"$close()\">\n" +
+    "        <span aria-hidden=\"true\">&times;</span>\n" +
+    "        <span class=\"cg-notify-sr-only\">Close</span>\n" +
+    "    </button>\n" +
+    "\n" +
     "</div>"
   );
 

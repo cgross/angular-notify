@@ -4,12 +4,12 @@
     "dist/angular-notify.js",
     "dist/angular-notify.css"
   ],
-  "version": "1.1.0",
+  "version": "2.0.0",
   "homepage": "https://github.com/cgross/angular-notify",
   "authors": [
     "Chris Gross <schtoo@schtoo.com>"
   ],
-  "description": "A minimalistic notification service for Angular apps.",
+  "description": "A minimalistic notification service for Angular.",
   "keywords": [
     "angular",
     "notify",
@@ -31,6 +31,6 @@
     "demo"
   ],
   "dependencies": {
-    "angular": "~1.2.16"
+    "angular": "~1.2"
   }
 }

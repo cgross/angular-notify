@@ -1,10 +1,10 @@
-<div class="gmail-template" ng-click="$close()">
+<div class="gmail-template" ng-click="$close()" ng-class="$classes">
 
 	<style>
 		.gmail-template {
 			position:fixed;
 			left:50%;
-			top:-50px;
+            top:0px;
 			z-index: 9999;
 			max-width:400px;
 			text-align: center;
@@ -19,10 +19,13 @@
 			-moz-transition: top 0.5s ease-out,opacity 0.5s ease-out;
 			-o-transition: top 0.5s ease-out,opacity 0.5s ease-out;
 			transition: top 0.5s ease-out,opacity 0.5s ease-out;
+
+            visibility: hidden;
 		}
 
 	</style>
 
-	{{$message}}
+	<span ng-show="!$messageTemplate">{{$message}}</span>
+    <span ng-show="$messageTemplate" class="cg-notify-message-template"></span>
 
 </div>
