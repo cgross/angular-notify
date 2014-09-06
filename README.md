@@ -72,7 +72,7 @@ Angular-notify comes with a very simplistic default notification template.  You 
 
 The scope for the partial will either be descended from `$rootScope` or the scope specified in the `notify({...})` options.  The template scope will be augmented with a `$message` property, a `$classes` property, and a special `$close()` function that you may use to close the notification.
 
-The `messageTemplate` property is also included on the scope as `$messageTemplate`.  To ensure your custom template works with hte `messageTemplate` option, your template should hide the normal text if `$messageTemplate` contains a value, and should have an element with the `cg-notify-message-template` class.  The element with the `cg-notify-message-template` class will have the compiled template appended to it automatically.
+The `messageTemplate` property is also included on the scope as `$messageTemplate`.  To ensure your custom template works with the `messageTemplate` option, your template should hide the normal text if `$messageTemplate` contains a value, and should have an element with the `cg-notify-message-template` class.  The element with the `cg-notify-message-template` class will have the compiled template appended to it automatically.
 
 
 ## Release History
