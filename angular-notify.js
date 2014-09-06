@@ -1,24 +1,24 @@
 angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','$templateCache','$rootScope',
-	function($timeout,$http,$compile,$templateCache,$rootScope){
+    function($timeout,$http,$compile,$templateCache,$rootScope){
 
-		var startTop = 10;
-		var verticalSpacing = 5;
-		var duration = 10000;
-		var defaultTemplateUrl = 'angular-notify.html';
-		var position = 'center';
-		var container = document.body;
+        var startTop = 10;
+        var verticalSpacing = 5;
+        var duration = 10000;
+        var defaultTemplateUrl = 'angular-notify.html';
+        var position = 'center';
+        var container = document.body;
 
-		var messageElements = [];
+        var messageElements = [];
 
-		var notify = function(args){
+        var notify = function(args){
 
-			if (typeof args !== 'object'){
-				args = {message:args};
-			}
+            if (typeof args !== 'object'){
+                args = {message:args};
+            }
 
-			args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
-			args.position = args.position ? args.position : position;
-			args.container = args.container ? args.container : container;
+            args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
+            args.position = args.position ? args.position : position;
+            args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
@@ -26,18 +26,18 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             scope.$classes = args.classes;
             scope.$messageTemplate = args.messageTemplate;
 
-			$http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
+            $http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
 
-				var templateElement = $compile(template)(scope);
-				templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
-					if (e.propertyName === 'opacity' ||
-						(e.originalEvent && e.originalEvent.propertyName === 'opacity')){
+                var templateElement = $compile(template)(scope);
+                templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
+                    if (e.propertyName === 'opacity' ||
+                        (e.originalEvent && e.originalEvent.propertyName === 'opacity')){
 
-						templateElement.remove();
-						messageElements.splice(messageElements.indexOf(templateElement),1);
-						layoutMessages();
-					}
-				});
+                        templateElement.remove();
+                        messageElements.splice(messageElements.indexOf(templateElement),1);
+                        layoutMessages();
+                    }
+                });
 
                 if (args.messageTemplate){
                     var messageTemplateElement;
@@ -54,45 +54,45 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     }
                 }
 
-				angular.element(args.container).append(templateElement);
-				messageElements.push(templateElement);
+                angular.element(args.container).append(templateElement);
+                messageElements.push(templateElement);
 
-				if (args.position === 'center'){
-					$timeout(function(){
-						templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
-					});
-				}
+                if (args.position === 'center'){
+                    $timeout(function(){
+                        templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
+                    });
+                }
 
-				scope.$close = function(){
-					templateElement.css('opacity',0);
-				};
+                scope.$close = function(){
+                    templateElement.css('opacity',0);
+                };
 
-				var layoutMessages = function(){
-					var j = 0;
-					var currentY = startTop;
-					for(var i = messageElements.length - 1; i >= 0; i --){
-						var element = messageElements[i];
+                var layoutMessages = function(){
+                    var j = 0;
+                    var currentY = startTop;
+                    for(var i = messageElements.length - 1; i >= 0; i --){
+                        var element = messageElements[i];
                         var height = element[0].offsetHeight;
                         var top = currentY + height;
-						currentY += height + verticalSpacing;
-						element.css('top',top + 'px').css('margin-top','-' + height + 'px').css('visibility','visible');
-						j ++;
-					}
-				};
+                        currentY += height + verticalSpacing;
+                        element.css('top',top + 'px').css('margin-top','-' + height + 'px').css('visibility','visible');
+                        j ++;
+                    }
+                };
 
-				$timeout(function(){
-					layoutMessages();
-				});
+                $timeout(function(){
+                    layoutMessages();
+                });
 
-				if (duration > 0){
-					$timeout(function(){
-						scope.$close();
-					},duration);
-				}
+                if (duration > 0){
+                    $timeout(function(){
+                        scope.$close();
+                    },duration);
+                }
 
-			}).error(function(data){
-					throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
-			});
+            }).error(function(data){
+                    throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
+            });
 
             var retVal = {};
             
@@ -113,24 +113,24 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
             return retVal;
 
-		};
+        };
 
-		notify.config = function(args){
-			startTop = !angular.isUndefined(args.top) ? args.top : startTop;
-			verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
-			duration = !angular.isUndefined(args.duration) ? args.duration : duration;
-			defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
-			position = !angular.isUndefined(args.position) ? args.position : position;
-			container = args.container ? args.container : container;
-		};
+        notify.config = function(args){
+            startTop = !angular.isUndefined(args.top) ? args.top : startTop;
+            verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
+            duration = !angular.isUndefined(args.duration) ? args.duration : duration;
+            defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
+            position = !angular.isUndefined(args.position) ? args.position : position;
+            container = args.container ? args.container : container;
+        };
 
-		notify.closeAll = function(){
-			for(var i = messageElements.length - 1; i >= 0; i --){
-				var element = messageElements[i];
-				element.css('opacity',0);
-			}
-		};
+        notify.closeAll = function(){
+            for(var i = messageElements.length - 1; i >= 0; i --){
+                var element = messageElements[i];
+                element.css('opacity',0);
+            }
+        };
 
-		return notify;
-	}
+        return notify;
+    }
 ]);

@@ -2,20 +2,20 @@ angular.module('app', ['cgNotify']);
 
 angular.module('app').controller('DemoCtrl',function($scope,notify){
 
-	$scope.msg = 'Hello! This is a sample message!';
+    $scope.msg = 'Hello! This is a sample message!';
     $scope.template = '';
 
-	$scope.demo = function(){
-		notify({
+    $scope.demo = function(){
+        notify({
             message: $scope.msg,
             classes: $scope.classes,
             templateUrl: $scope.template
         });
-	};
+    };
 
-	$scope.closeAll = function(){
-		notify.closeAll();
-	};
+    $scope.closeAll = function(){
+        notify.closeAll();
+    };
 
     $scope.demoMessageTemplate = function(){
 
