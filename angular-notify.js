@@ -2,7 +2,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
     function($timeout,$http,$compile,$templateCache,$rootScope){
 
         var startTop = 10;
-        var verticalSpacing = 5;
+        var verticalSpacing = 15;
         var duration = 10000;
         var defaultTemplateUrl = 'angular-notify.html';
         var position = 'center';
@@ -64,18 +64,24 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 }
 
                 scope.$close = function(){
-                    templateElement.css('opacity',0);
+                    templateElement.css('opacity',0).attr('data-closing','true');
+                    layoutMessages();
                 };
 
                 var layoutMessages = function(){
                     var j = 0;
                     var currentY = startTop;
                     for(var i = messageElements.length - 1; i >= 0; i --){
+                        var shadowHeight = 10;
                         var element = messageElements[i];
                         var height = element[0].offsetHeight;
-                        var top = currentY + height;
-                        currentY += height + verticalSpacing;
-                        element.css('top',top + 'px').css('margin-top','-' + height + 'px').css('visibility','visible');
+                        var top = currentY + height + shadowHeight;
+                        if (element.attr('data-closing')){
+                            top += 20;
+                        } else {
+                            currentY += height + verticalSpacing;
+                        }
+                        element.css('top',top + 'px').css('margin-top','-' + (height+shadowHeight) + 'px').css('visibility','visible');
                         j ++;
                     }
                 };

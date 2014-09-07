@@ -12,12 +12,15 @@
     border: 1px solid #bce8f1;
     border-radius: 4px;
 
-    -webkit-transition: top 0.5s ease-out,opacity 0.5s ease-out;
-    -moz-transition: top 0.5s ease-out,opacity 0.5s ease-out;
-    -o-transition: top 0.5s ease-out,opacity 0.5s ease-out;
-    transition: top 0.5s ease-out,opacity 0.5s ease-out;    
+    -webkit-transition: top 0.5s ease-out,opacity 0.2s ease-out;
+    -moz-transition: top 0.5s ease-out,opacity 0.2s ease-out;
+    -o-transition: top 0.5s ease-out,opacity 0.2s ease-out;
+    transition: top 0.5s ease-out,opacity 0.2s ease-out;    
 
     visibility:hidden;
+
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .cg-notify-message a {

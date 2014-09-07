@@ -55,7 +55,7 @@ This function will return an object with a `close()` method and a `message` prop
 
 Call `config` to set the default configuration options for angular-notify.  The following options may be specified in the given object:
 
-* `duration` - The default duration (in milliseconds) of each message.
+* `duration` - The default duration (in milliseconds) of each message.  A duration of 0 will prevent messages from closing automatically.
 * `startTop` - The Y pixel value where messages will be shown.
 * `verticalSpacing` - The number of pixels that should be reserved between messages vertically.
 * `templateUrl` - The default message template.
@@ -76,15 +76,16 @@ The `messageTemplate` property is also included on the scope as `$messageTemplat
 
 
 ## Release History
- * v2.0.1 - 09/06/2014 - Fixed #4 (config() not correctly setting startTop).
- * v2.0.0 - 09/06/2014
+ * v2.0.2 - 09/06/2014
    * Default template redesigned with a Bootstrap look and feel.  Default template now also includes a close button.
    * Default message location is now the top center.
    * Default message duration is now 10 seconds.
+   * Default verticalSpacing is now 15px.
    * The `template` option was renamed to `templateUrl`.
    * New `messageTemplate` option added.
    * New `classes` option added.
    * Fixed an issue causing a message with multiple lines of text to be placed into the visible area too soon.
+   * Fixed #4 (config() not correctly setting startTop)
  * v1.1.0 - 5/18/2014 - Added return value allowing for closing and updating of message.
  * v1.0.0 - 4/16/2014 - Significant refactoring.  
   * JQuery is no longer a required dependency.
