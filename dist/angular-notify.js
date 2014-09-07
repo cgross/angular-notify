@@ -3,7 +3,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
         var startTop = 10;
         var verticalSpacing = 15;
-        var duration = 0;
+        var duration = 10000;
         var defaultTemplateUrl = 'angular-notify.html';
         var position = 'center';
         var container = document.body;
