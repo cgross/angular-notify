@@ -76,6 +76,8 @@ The `messageTemplate` property is also included on the scope as `$messageTemplat
 
 
 ## Release History
+ * v2.0.3 - 09/10/2014
+   * Added onClose() method to notify constructor.
  * v2.0.2 - 09/06/2014
    * Default template redesigned with a Bootstrap look and feel.  Default template now also includes a close button.
    * Default message location is now the top center.
