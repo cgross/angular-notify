@@ -20,11 +20,13 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             args.position = args.position ? args.position : position;
             args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
+            args.onClose = args.onClose ? args.onClose : function () {return;};
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$message = args.message;
             scope.$classes = args.classes;
             scope.$messageTemplate = args.messageTemplate;
+            scope.$onClose = args.onClose;
 
             $http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
 
@@ -66,6 +68,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 scope.$close = function(){
                     templateElement.css('opacity',0).attr('data-closing','true');
                     layoutMessages();
+                    scope.$onClose();
                 };
 
                 var layoutMessages = function(){
@@ -101,7 +104,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             });
 
             var retVal = {};
-            
+
             retVal.close = function(){
                 if (scope.$close){
                     scope.$close();
