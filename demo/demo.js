@@ -26,8 +26,11 @@ angular.module('app').controller('DemoCtrl',function($scope,notify){
             messageTemplate: messageTemplate,
             classes: $scope.classes,
             scope:$scope,
-            templateUrl: $scope.template
-        });       
+            templateUrl: $scope.template,
+            onClose: function () {
+              console.log('closed at', new Date());
+            }
+        });
 
     };
 
