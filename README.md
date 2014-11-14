@@ -47,6 +47,7 @@ The `notify` function can either be passed a string or an object.  When passing 
 * `messageTemplate` - Optional. A string containing any valid Angular HTML which will be shown instead of the regular `message` text. The string must contain one root element like all valid Angular HTML templates (so wrap everything in a `<span>`).
 * `scope` - Optional.  A valid Angular scope object.  The scope of the template will be created by calling `$new()` on this scope.
 * `position` - Optional.  Currently `center` and `right` are the only acceptable values.
+* `duration` - Optional.  Currently duration (in milliseconds) of the message.  A duration of 0 will prevent messages from closing automatically.
 * `container` - Optional.  Element that contains each notification.  Defaults to `document.body`.
 
 This function will return an object with a `close()` method and a `message` property.
