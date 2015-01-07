@@ -20,6 +20,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             args.position = args.position ? args.position : position;
             args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
+            args.duration = args.duration ? args.duration : duration;
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$message = args.message;
@@ -57,10 +58,14 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 angular.element(args.container).append(templateElement);
                 messageElements.push(templateElement);
 
-                if (args.position === 'center'){
-                    $timeout(function(){
-                        templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
-                    });
+                switch (args.position){
+                    case 'center':  templateElement.addClass('cg-notify-message-center');
+                                    templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
+                                    break;
+                    case 'left':    templateElement.addClass('cg-notify-message-left');
+                                    break;
+                    case 'right':   templateElement.addClass('cg-notify-message-right');
+                                    break;
                 }
 
                 scope.$close = function(){
@@ -69,7 +74,6 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 };
 
                 var layoutMessages = function(){
-                    var j = 0;
                     var currentY = startTop;
                     for(var i = messageElements.length - 1; i >= 0; i --){
                         var shadowHeight = 10;
@@ -82,7 +86,6 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                             currentY += height + verticalSpacing;
                         }
                         element.css('top',top + 'px').css('margin-top','-' + (height+shadowHeight) + 'px').css('visibility','visible');
-                        j ++;
                     }
                 };
 
@@ -90,10 +93,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     layoutMessages();
                 });
 
-                if (duration > 0){
+                if (args.duration > 0){
                     $timeout(function(){
                         scope.$close();
-                    },duration);
+                    },args.duration);
                 }
 
             }).error(function(data){
@@ -122,11 +125,11 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         };
 
         notify.config = function(args){
-            startTop = !angular.isUndefined(args.startTop) ? args.startTop : startTop;
-            verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
-            duration = !angular.isUndefined(args.duration) ? args.duration : duration;
+            startTop = angular.isDefined(args.startTop) ? args.startTop : startTop;
+            verticalSpacing = angular.isDefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
+            duration = angular.isDefined(args.duration) ? args.duration : duration;
             defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
-            position = !angular.isUndefined(args.position) ? args.position : position;
+            position = angular.isDefined(args.position) ? args.position : position;
             container = args.container ? args.container : container;
         };
 
