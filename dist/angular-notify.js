@@ -16,16 +16,24 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 args = {message:args};
             }
 
-            args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
-            args.position = args.position ? args.position : position;
-            args.container = args.container ? args.container : container;
-            args.classes = args.classes ? args.classes : '';
-            args.duration = args.duration ? args.duration : duration;
+            args.templateUrl = angular.isString(args.templateUrl) && args.templateUrl.length > 0 ? args.templateUrl : defaultTemplateUrl;         
+            args.position = angular.isString(args.position) ? args.position : position;
+            args.container = angular.isObject(args.container) ? args.container : container;
+            args.classes = angular.isString(args.classes) ? args.classes : '';
+            args.duration = angular.isNumber(args.duration) ? args.duration : duration;
+            args.onOpen = angular.isFunction(args.onOpen) ? args.onOpen : undefined;
+            args.onClose = angular.isFunction(args.onClose) ? args.onClose : undefined;
 
-            var scope = args.scope ? args.scope.$new() : $rootScope.$new();
+            var scope = angular.isDefined(args.scope) ? args.scope.$new() : $rootScope.$new();
             scope.$message = args.message;
             scope.$classes = args.classes;
-            scope.$messageTemplate = args.messageTemplate;
+            scope.$messageTemplate = args.messageTemplate;   
+            
+            if(angular.isFunction(args.onClick)){
+                scope.$click = function(){
+                    args.onClick(scope.$message);
+                };
+            }
 
             $http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
 
@@ -71,6 +79,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 scope.$close = function(){
                     templateElement.css('opacity',0).attr('data-closing','true');
                     layoutMessages();
+
+                    if(angular.isDefined(args.onClose)){
+                        args.onClose(scope.$message);
+                    }
                 };
 
                 var layoutMessages = function(){
@@ -99,6 +111,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     },args.duration);
                 }
 
+                if(angular.isDefined(args.onOpen)){
+                    args.onOpen(scope.$message);
+                }
+
             }).error(function(data){
                     throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
             });
@@ -125,12 +141,12 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         };
 
         notify.config = function(args){
-            startTop = angular.isDefined(args.startTop) ? args.startTop : startTop;
-            verticalSpacing = angular.isDefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
-            duration = angular.isDefined(args.duration) ? args.duration : duration;
-            defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
-            position = angular.isDefined(args.position) ? args.position : position;
-            container = args.container ? args.container : container;
+            startTop = angular.isNumber(args.startTop) ? args.startTop : startTop;
+            verticalSpacing = angular.isNumber(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
+            duration = angular.isNumber(args.duration) ? args.duration : duration;
+            defaultTemplateUrl = angular.isString(args.templateUrl) && args.templateUrl.length > 0 ? args.templateUrl : defaultTemplateUrl;
+            position = angular.isNumber(args.position) ? args.position : position;
+            container = angular.isObject(args.container) ? args.container : container;
         };
 
         notify.closeAll = function(){
@@ -148,7 +164,7 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('angular-notify.html',
-    "<div class=\"cg-notify-message\" ng-class=\"$classes\">\n" +
+    "<div class=\"cg-notify-message\" ng-class=\"$classes\" ng-click=\"$click()\">\n" +
     "\n" +
     "    <div ng-show=\"!$messageTemplate\">\n" +
     "        {{$message}}\n" +
