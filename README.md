@@ -49,6 +49,9 @@ The `notify` function can either be passed a string or an object.  When passing 
 * `position` - Optional.  'left', 'right' and 'center' are the only acceptable values.
 * `duration` - Optional. The duration (in milliseconds) of the message. A duration of 0 will prevent the message from closing automatically.
 * `container` - Optional.  Element that contains each notification.  Defaults to `document.body`.
+* `onOpen` - Optional. Function that is called when the notification is shown to the user. The function receives the message of the notification as its only parameter.
+* `onClick` - Optional. Function that is called when the notification is clicked by the user. The function receives the message of the notification as its only parameter.
+* `onClose` - Optional. Function that is called when the notification is closed by the user manually. It is not called when `closeAll()` is called and closes the notification programatically. The function receives the message of the notification as its only parameter.
 
 This function will return an object with a `close()` method and a `message` property.
 
@@ -65,7 +68,7 @@ Call `config` to set the default configuration options for angular-notify.  The 
 
 ### notify.closeAll()
 
-Closes all currently open notifications.
+Closes all currently open notifications. Notifications that are closed by `closeAll()` will not call their `onClose`-events.
 
 ## Providing Custom Templates
 
