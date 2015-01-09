@@ -39,7 +39,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
                 var templateElement = $compile(template)(scope);
                 templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
-                    if (e.propertyName === 'opacity' ||
+                    if (e.propertyName === 'opacity' || e.currentTarget.style.opacity === '0' ||
                         (e.originalEvent && e.originalEvent.propertyName === 'opacity')){
 
                         templateElement.remove();
@@ -145,7 +145,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             verticalSpacing = angular.isNumber(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
             duration = angular.isNumber(args.duration) ? args.duration : duration;
             defaultTemplateUrl = angular.isString(args.templateUrl) && args.templateUrl.length > 0 ? args.templateUrl : defaultTemplateUrl;
-            position = angular.isNumber(args.position) ? args.position : position;
+            position = angular.isString(args.position) ? args.position : position;
             container = angular.isObject(args.container) ? args.container : container;
         };
 
