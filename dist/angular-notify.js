@@ -66,15 +66,17 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 angular.element(args.container).append(templateElement);
                 messageElements.push(templateElement);
 
-                switch (args.position){
-                    case 'center':  templateElement.addClass('cg-notify-message-center');
-                                    templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
-                                    break;
-                    case 'left':    templateElement.addClass('cg-notify-message-left');
-                                    break;
-                    case 'right':   templateElement.addClass('cg-notify-message-right');
-                                    break;
-                }
+                $timeout(function(){
+                    switch (args.position){
+                        case 'center':  templateElement.addClass('cg-notify-message-center');
+                                        templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
+                                        break;
+                        case 'left':    templateElement.addClass('cg-notify-message-left');
+                                        break;
+                        case 'right':   templateElement.addClass('cg-notify-message-right');
+                                        break;
+                    }
+                });                
 
                 scope.$close = function(){
                     templateElement.css('opacity',0).attr('data-closing','true');
