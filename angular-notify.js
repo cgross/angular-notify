@@ -68,12 +68,13 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
                 $timeout(function(){
                     switch (args.position){
-                        case 'center':  templateElement.addClass('cg-notify-message-center');
-                                        templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
+                        case 'center':  scope.$classes += 'cg-notify-message-center';
+                                        scope.$centerStyle = {'margin-left': '-' + (templateElement[0].offsetWidth /2) + 'px'};
+                                        //templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
                                         break;
-                        case 'left':    templateElement.addClass('cg-notify-message-left');
+                        case 'left':    scope.$classes += ' cg-notify-message-left';
                                         break;
-                        case 'right':   templateElement.addClass('cg-notify-message-right');
+                        case 'right':   scope.$classes += ' cg-notify-message-right';
                                         break;
                     }
                 });                
