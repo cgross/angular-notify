@@ -1,4 +1,8 @@
-<div class="cg-notify-message" ng-class="$classes">
+<div class="cg-notify-message" ng-class="{$classes: true, 
+'cg-notify-message-center': $position === 'center',
+'cg-notify-message-left': $position === 'left',
+'cg-notify-message-right': $position === 'right'}"
+ng-style="{'margin-left': $centerMargin}">
 
     <div ng-show="!$messageTemplate">
         {{$message}}

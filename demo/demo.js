@@ -5,11 +5,15 @@ angular.module('app').controller('DemoCtrl',function($scope,notify){
     $scope.msg = 'Hello! This is a sample message!';
     $scope.template = '';
 
+    $scope.positions = ['center', 'left', 'right'];
+    $scope.position = $scope.positions[0];
+
     $scope.demo = function(){
         notify({
             message: $scope.msg,
             classes: $scope.classes,
-            templateUrl: $scope.template
+            templateUrl: $scope.template,
+            position: $scope.position,
         });
     };
 
@@ -26,7 +30,8 @@ angular.module('app').controller('DemoCtrl',function($scope,notify){
             messageTemplate: messageTemplate,
             classes: $scope.classes,
             scope:$scope,
-            templateUrl: $scope.template
+            templateUrl: $scope.template,
+            position: $scope.position,
         });       
 
     };
