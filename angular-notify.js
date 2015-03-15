@@ -30,7 +30,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
                 var templateElement = $compile(template)(scope);
                 templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
-                    if (e.propertyName === 'opacity' ||
+                    if (e.propertyName === 'opacity' || e.currentTarget.style.opacity === 0 || 
                         (e.originalEvent && e.originalEvent.propertyName === 'opacity')){
 
                         templateElement.remove();
