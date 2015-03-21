@@ -42,6 +42,7 @@ function myController($scope,notify){  // <-- Inject notify
 The `notify` function can either be passed a string or an object.  When passing an object, the object parameters can be:
 
 * `message` - Required.  The message to show.
+* `duration` - Optional.  The duration (in milliseconds) of message.  A duration of 0 will prevent messages from closing automatically.
 * `templateUrl` - Optional.  A custom template for the UI of the message.
 * `classes` - Optional. A list of custom CSS classes to apply to the message element.
 * `messageTemplate` - Optional. A string containing any valid Angular HTML which will be shown instead of the regular `message` text. The string must contain one root element like all valid Angular HTML templates (so wrap everything in a `<span>`).

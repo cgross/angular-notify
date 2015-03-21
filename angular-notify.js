@@ -3,7 +3,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
         var startTop = 10;
         var verticalSpacing = 15;
-        var duration = 10000;
+        var defaultDuration = 10000;
         var defaultTemplateUrl = 'angular-notify.html';
         var position = 'center';
         var container = document.body;
@@ -16,6 +16,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 args = {message:args};
             }
 
+            args.duration = args.duration ? args.duration : defaultDuration;
             args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             args.position = args.position ? args.position : position;
             args.container = args.container ? args.container : container;
@@ -90,10 +91,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     layoutMessages();
                 });
 
-                if (duration > 0){
+                if (args.duration > 0){
                     $timeout(function(){
                         scope.$close();
-                    },duration);
+                    },args.duration);
                 }
 
             }).error(function(data){
@@ -124,7 +125,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         notify.config = function(args){
             startTop = !angular.isUndefined(args.startTop) ? args.startTop : startTop;
             verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
-            duration = !angular.isUndefined(args.duration) ? args.duration : duration;
+            defaultDuration = !angular.isUndefined(args.duration) ? args.duration : defaultDuration;
             defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             position = !angular.isUndefined(args.position) ? args.position : position;
             container = args.container ? args.container : container;
