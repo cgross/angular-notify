@@ -76,6 +76,8 @@ The `messageTemplate` property is also included on the scope as `$messageTemplat
 
 
 ## Release History
+ * v2.1.0 - 28/12/2014
+   * Update to latest angular (1.3.8)
  * v2.0.2 - 09/06/2014
    * Default template redesigned with a Bootstrap look and feel.  Default template now also includes a close button.
    * Default message location is now the top center.
