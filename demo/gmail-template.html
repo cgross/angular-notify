@@ -1,31 +1,31 @@
-<div class="gmail-template" ng-click="$close()" ng-class="$classes">
+<div class="gmail-template cg-notify-message" ng-click="$close()" ng-class="[$classes, 
+    $position === 'center' ? 'cg-notify-message-center' : '',
+    $position === 'left' ? 'cg-notify-message-left' : '',
+    $position === 'right' ? 'cg-notify-message-right' : '']"
+    ng-style="{'margin-left': $centerMargin}">
 
-	<style>
-		.gmail-template {
-			position:fixed;
-			left:50%;
-            top:0px;
-			z-index: 9999;
-			max-width:400px;
-			text-align: center;
 
-			border:1px solid rgb(240, 195, 109);
-			background-color: rgb(249, 237, 190);
-			font-size: 13px;
-			font-weight: bold;
-			padding:2px 8px 2px 8px;
+    <style>
+        .gmail-template {
+            text-align: center;
 
-			-webkit-transition: top 0.5s ease-out,opacity 0.5s ease-out;
-			-moz-transition: top 0.5s ease-out,opacity 0.5s ease-out;
-			-o-transition: top 0.5s ease-out,opacity 0.5s ease-out;
-			transition: top 0.5s ease-out,opacity 0.5s ease-out;
+            border:1px solid rgb(240, 195, 109);
+            background-color: rgb(249, 237, 190);
+            font-size: 13px;
+            font-weight: bold;
+            padding:2px 8px 2px 8px;
 
-            visibility: hidden;
-		}
+            border-radius: 0;
+            color:#333;
+        }
+    </style>
 
-	</style>
+    <div ng-show="!$messageTemplate">
+        {{$message}}
+    </div>
 
-	<span ng-show="!$messageTemplate">{{$message}}</span>
-    <span ng-show="$messageTemplate" class="cg-notify-message-template"></span>
+    <div ng-show="$messageTemplate" class="cg-notify-message-template">
+        
+    </div>
 
 </div>

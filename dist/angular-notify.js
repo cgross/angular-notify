@@ -3,12 +3,14 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
         var startTop = 10;
         var verticalSpacing = 15;
-        var duration = 10000;
+        var defaultDuration = 10000;
         var defaultTemplateUrl = 'angular-notify.html';
         var position = 'center';
         var container = document.body;
+        var maximumOpen = 0;
 
         var messageElements = [];
+        var openNotificationsScope = [];
 
         var notify = function(args){
 
@@ -16,6 +18,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 args = {message:args};
             }
 
+            args.duration = args.duration ? args.duration : defaultDuration;
             args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
@@ -26,6 +29,13 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             scope.$classes = args.classes;
             scope.$messageTemplate = args.messageTemplate;
 
+            if (maximumOpen > 0) {
+                var numToClose = (openNotificationsScope.length + 1) - maximumOpen;
+                for (var i = 0; i < numToClose; i++) {
+                    openNotificationsScope[i].$close();
+                }
+            }
+
             $http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
 
                 var templateElement = $compile(template)(scope);
@@ -35,6 +45,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
                         templateElement.remove();
                         messageElements.splice(messageElements.indexOf(templateElement),1);
+                        openNotificationsScope.splice(openNotificationsScope.indexOf(scope),1);
                         layoutMessages();
                     }
                 });
@@ -90,10 +101,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     layoutMessages();
                 });
 
-                if (duration > 0){
+                if (args.duration > 0){
                     $timeout(function(){
                         scope.$close();
-                    },duration);
+                    },args.duration);
                 }
 
             }).error(function(data){
@@ -117,6 +128,8 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 }
             });
 
+            openNotificationsScope.push(scope);
+
             return retVal;
 
         };
@@ -124,10 +137,11 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         notify.config = function(args){
             startTop = !angular.isUndefined(args.startTop) ? args.startTop : startTop;
             verticalSpacing = !angular.isUndefined(args.verticalSpacing) ? args.verticalSpacing : verticalSpacing;
-            duration = !angular.isUndefined(args.duration) ? args.duration : duration;
+            defaultDuration = !angular.isUndefined(args.duration) ? args.duration : defaultDuration;
             defaultTemplateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             position = !angular.isUndefined(args.position) ? args.position : position;
             container = args.container ? args.container : container;
+            maximumOpen = args.maximumOpen ? args.maximumOpen : maximumOpen;
         };
 
         notify.closeAll = function(){
@@ -146,10 +160,10 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('angular-notify.html',
     "<div class=\"cg-notify-message\" ng-class=\"[$classes, \n" +
-    "$position === 'center' ? 'cg-notify-message-center' : '',\n" +
-    "$position === 'left' ? 'cg-notify-message-left' : '',\n" +
-    "$position === 'right' ? 'cg-notify-message-right' : '']\"\n" +
-    "ng-style=\"{'margin-left': $centerMargin}\">\n" +
+    "    $position === 'center' ? 'cg-notify-message-center' : '',\n" +
+    "    $position === 'left' ? 'cg-notify-message-left' : '',\n" +
+    "    $position === 'right' ? 'cg-notify-message-right' : '']\"\n" +
+    "    ng-style=\"{'margin-left': $centerMargin}\">\n" +
     "\n" +
     "    <div ng-show=\"!$messageTemplate\">\n" +
     "        {{$message}}\n" +
