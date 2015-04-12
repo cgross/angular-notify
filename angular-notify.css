@@ -1,6 +1,5 @@
 .cg-notify-message {
     position:fixed;
-    left:50%;
     top:0px;
     z-index: 9999;
     max-width:400px;
@@ -21,6 +20,18 @@
 
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.cg-notify-message-center {
+    left:50%;
+}
+
+.cg-notify-message-left {
+    left:15px;
+}
+
+.cg-notify-message-right {
+    right:15px;
 }
 
 .cg-notify-message a {

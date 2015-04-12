@@ -17,11 +17,11 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             }
 
             args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
-            args.position = args.position ? args.position : position;
             args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
+            scope.$position = args.position ? args.position : position;
             scope.$message = args.message;
             scope.$classes = args.classes;
             scope.$messageTemplate = args.messageTemplate;
@@ -57,9 +57,9 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 angular.element(args.container).append(templateElement);
                 messageElements.push(templateElement);
 
-                if (args.position === 'center'){
+                if (scope.$position === 'center'){
                     $timeout(function(){
-                        templateElement.css('margin-left','-' + (templateElement[0].offsetWidth /2) + 'px');
+                        scope.$centerMargin = '-' + (templateElement[0].offsetWidth /2) + 'px';
                     });
                 }
 
