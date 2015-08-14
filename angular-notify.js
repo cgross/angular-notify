@@ -47,7 +47,7 @@
       args = setupArgs(args);
 
       var scope = args.scope ? args.scope.$new() : $rootScope.$new();
-      scope.$position = args.position ? args.position : defaultOptions.position;
+      scope.$position = args.position;
       scope.$message = args.message;
       scope.$classes = args.classes;
       scope.$messageTemplate = args.messageTemplate;
