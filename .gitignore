@@ -18,4 +18,4 @@ node_modules
 
 temp
 coverage/
-bower/
+bower_components/
