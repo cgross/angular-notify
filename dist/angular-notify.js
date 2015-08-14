@@ -4,17 +4,20 @@
   angular.module('cgNotify', [])
     .provider('notify', notifyProvider);
 
-  var defaultOptions = {
-    startTop: 10,
-    verticalSpacing: 15,
-    duration: 10000,
-    templateUrl: 'angular-notify.html',
-    position: 'center',
-    container: document.body,
-    maximumOpen: 0,
-  };
+  var defaultOptions;
 
   function notifyProvider() {
+
+    defaultOptions = {
+      startTop: 10,
+      verticalSpacing: 15,
+      duration: 10000,
+      templateUrl: 'angular-notify.html',
+      position: 'center',
+      container: document.body,
+      maximumOpen: 0
+    };
+
     return {
       setOptions: setOptions,
       $get: notifyService
@@ -44,7 +47,7 @@
       args = setupArgs(args);
 
       var scope = args.scope ? args.scope.$new() : $rootScope.$new();
-      scope.$position = args.position ? args.position : defaultOptions.position;
+      scope.$position = args.position;
       scope.$message = args.message;
       scope.$classes = args.classes;
       scope.$messageTemplate = args.messageTemplate;
@@ -193,7 +196,7 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('angular-notify.html',
-    "<div class=\"cg-notify-message\" ng-class=\"[$classes, \n" +
+    "<div class=\"cg-notify-message\" ng-class=\"[$classes,\n" +
     "    $position === 'center' ? 'cg-notify-message-center' : '',\n" +
     "    $position === 'left' ? 'cg-notify-message-left' : '',\n" +
     "    $position === 'right' ? 'cg-notify-message-right' : '']\"\n" +
@@ -204,7 +207,7 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "\n" +
     "    <div ng-show=\"$messageTemplate\" class=\"cg-notify-message-template\">\n" +
-    "        \n" +
+    "\n" +
     "    </div>\n" +
     "\n" +
     "    <button type=\"button\" class=\"cg-notify-close\" ng-click=\"$close()\">\n" +
@@ -212,7 +215,7 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
     "        <span class=\"cg-notify-sr-only\">Close</span>\n" +
     "    </button>\n" +
     "\n" +
-    "</div>"
+    "</div>\n"
   );
 
 }]);
