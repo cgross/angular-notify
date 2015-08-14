@@ -7,10 +7,10 @@
     "url": "git://github.com/cgross/angular-notify.git"
   },
   "scripts": {
-      "pretest": "npm install && bower install",
-      "test": "node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters dots",
-      "test-watch": "node_modules/karma/bin/karma start karma.conf.js --auto-watch",
-      "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run"
+    "pretest": "npm install && bower install",
+    "test": "node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters dots",
+    "test-watch": "node_modules/karma/bin/karma start karma.conf.js --auto-watch",
+    "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
@@ -23,6 +23,7 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.6.1",
+    "grunt-karma": "^0.12.0",
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.9",
     "karma-coverage": "^0.5.0",
