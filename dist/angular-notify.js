@@ -5,7 +5,6 @@
     .provider('notify', notifyProvider);
 
   var defaultOptions;
-
   function notifyProvider() {
 
     defaultOptions = {
@@ -19,11 +18,11 @@
     };
 
     return {
-      setOptions: setOptions,
+      setDefaults: setDefaults,
       $get: notifyService
     };
 
-    function setOptions(options) {
+    function setDefaults(options) {
       angular.extend(defaultOptions, options);
     }
   }
