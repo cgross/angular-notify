@@ -2,7 +2,7 @@ describe('cgNotify', function() {
   beforeEach(module('cgNotify'));
 
   beforeEach(module('cgNotify', function(notifyProvider) {
-    notifyProvider.setOptions({
+    notifyProvider.setDefaults({
       startTop: 20,
       verticalSpacing: 30,
       duration: 20000,
