@@ -6,17 +6,30 @@
     "type": "git",
     "url": "git://github.com/cgross/angular-notify.git"
   },
+  "scripts": {
+      "pretest": "npm install && bower install",
+      "test": "node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters dots",
+      "test-watch": "node_modules/karma/bin/karma start karma.conf.js --auto-watch",
+      "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run"
+  },
   "devDependencies": {
     "grunt": "~0.4.4",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-jasmine": "~0.6.3",
-    "grunt-contrib-concat": "~0.4.0",
     "grunt-angular-templates": "~0.5.4",
+    "grunt-contrib-concat": "~0.4.0",
     "grunt-contrib-connect": "~0.7.1",
-    "grunt-contrib-watch": "~0.6.1",
-    "load-grunt-tasks": "~0.4.0",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-cssmin": "~0.9.0"
+    "grunt-contrib-cssmin": "~0.9.0",
+    "grunt-contrib-jasmine": "~0.6.3",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-coverage": "^0.5.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-junit-reporter": "^0.3.3",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "load-grunt-tasks": "~0.4.0",
+    "phantomjs": "^1.9.18"
   }
 }
