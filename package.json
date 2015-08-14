@@ -10,11 +10,16 @@
     "pretest": "npm install && bower install",
     "test": "node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters dots",
     "test-watch": "node_modules/karma/bin/karma start karma.conf.js --auto-watch",
-    "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run"
+    "test-single-run": "node_modules/karma/bin/karma start karma.conf.js  --single-run",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "node_modules/.bin/webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "./protractor.sh; node_modules/.bin/protractor protractor.conf.js"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-angular-templates": "~0.5.4",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-concat": "~0.4.0",
     "grunt-contrib-connect": "~0.7.1",
     "grunt-contrib-copy": "~0.5.0",
@@ -31,6 +36,7 @@
     "karma-junit-reporter": "^0.3.3",
     "karma-phantomjs-launcher": "^0.2.1",
     "load-grunt-tasks": "~0.4.0",
-    "phantomjs": "^1.9.18"
+    "phantomjs": "^1.9.18",
+    "protractor": "^2.1.0"
   }
 }
