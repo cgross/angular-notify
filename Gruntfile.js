@@ -31,12 +31,9 @@ module.exports = function (grunt) {
         src: 'angular-notify.js'
       }
     },
-    jasmine: {
+    karma: {
       unit: {
-        src: [''],
-        options: {
-          specs: 'test/unit/*.js'
-        }
+        configFile: 'karma.conf.js'
       }
     },
     copy: {
@@ -80,6 +77,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', ['jshint','connect', 'watch']);
   grunt.registerTask('build',['ngtemplates','concat','uglify','copy','cssmin']);
-  grunt.registerTask('test',['build','jasmine']);
+  grunt.registerTask('test',['build','karma']);
 
 };
