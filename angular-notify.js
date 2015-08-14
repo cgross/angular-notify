@@ -4,17 +4,20 @@
   angular.module('cgNotify', [])
     .provider('notify', notifyProvider);
 
-  var defaultOptions = {
-    startTop: 10,
-    verticalSpacing: 15,
-    duration: 10000,
-    templateUrl: 'angular-notify.html',
-    position: 'center',
-    container: document.body,
-    maximumOpen: 0,
-  };
+  var defaultOptions;
 
   function notifyProvider() {
+
+    defaultOptions = {
+      startTop: 10,
+      verticalSpacing: 15,
+      duration: 10000,
+      templateUrl: 'angular-notify.html',
+      position: 'center',
+      container: document.body,
+      maximumOpen: 0
+    };
+
     return {
       setOptions: setOptions,
       $get: notifyService
