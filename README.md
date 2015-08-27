@@ -50,7 +50,7 @@ The `notify` function can either be passed a string or an object.  When passing 
 * `position` - Optional.  `center`, `left` and `right` are the only acceptable values.
 * `container` - Optional.  Element that contains each notification.  Defaults to `document.body`.
 
-This function will return an object with a `close()` method and a `message` property.
+This function will return an object with a `close()` method, `message` and `classes` properties.
 
 ### notify.config(Object)
 
