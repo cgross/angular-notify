@@ -128,6 +128,16 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 }
             });
 
+            Object.defineProperty(retVal,'classes',{
+                get: function(){
+                    return scope.$classes;
+
+                },
+                set: function(val){
+                    scope.$classes = val;
+                }
+            });
+
             openNotificationsScope.push(scope);
 
             return retVal;
