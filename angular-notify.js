@@ -8,7 +8,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         var position = 'center';
         var container = document.body;
         var maximumOpen = 0;
-
+        var parentalPosition = false;
         var messageElements = [];
         var openNotificationsScope = [];
 
@@ -21,12 +21,14 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             args.duration = args.duration ? args.duration : defaultDuration;
             args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             args.container = args.container ? args.container : container;
+            args.parentalPosition = args.parentalPosition ? args.parentalPosition : parentalPosition;
             args.classes = args.classes ? args.classes : '';
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$position = args.position ? args.position : position;
             scope.$message = args.message;
             scope.$classes = args.classes;
+            scope.$parentalPosition = args.parentalPosition;
             scope.$messageTemplate = args.messageTemplate;
 
             if (maximumOpen > 0) {
@@ -63,6 +65,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     } else {
                         throw new Error('cgNotify could not find the .cg-notify-message-template element in '+args.templateUrl+'.');
                     }
+                }
+
+                if (args.parentalPosition === true){
+                  angular.element(args.container).addClass('cg-notify-notification-parent');
                 }
 
                 angular.element(args.container).append(templateElement);
@@ -142,6 +148,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             position = !angular.isUndefined(args.position) ? args.position : position;
             container = args.container ? args.container : container;
             maximumOpen = args.maximumOpen ? args.maximumOpen : maximumOpen;
+            parentalPosition = args.parentalPosition ? args.parentalPosition : parentalPosition;
         };
 
         notify.closeAll = function(){
