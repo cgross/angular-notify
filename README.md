@@ -49,6 +49,7 @@ The `notify` function can either be passed a string or an object.  When passing 
 * `scope` - Optional.  A valid Angular scope object.  The scope of the template will be created by calling `$new()` on this scope.
 * `position` - Optional.  `center`, `left` and `right` are the only acceptable values.
 * `container` - Optional.  Element that contains each notification.  Defaults to `document.body`.
+* `parentalPosition` - Optional.  Boolean for whether or not the notification should be positioned absolutely from it container intead of CSS position:fixed. Requires the parent to have position:relative.
 
 This function will return an object with a `close()` method and a `message` property.
 
