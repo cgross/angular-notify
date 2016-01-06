@@ -8,6 +8,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         var position = 'center';
         var container = document.body;
         var maximumOpen = 0;
+        var opacityAnimationTimeout = 500;
 
         var messageElements = [];
         var openNotificationsScope = [];
@@ -77,6 +78,11 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 scope.$close = function(){
                     templateElement.css('opacity',0).attr('data-closing','true');
                     layoutMessages();
+                    // add a cleanup handler for the templateElement in case the transitionend event is not fired (e.g. the transition is 
+                    // interrupted by the browser).
+                    $timeout(function() {
+                        templateElement.remove();
+                    }, opacityAnimationTimeout);
                 };
 
                 var layoutMessages = function(){
@@ -142,6 +148,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             position = !angular.isUndefined(args.position) ? args.position : position;
             container = args.container ? args.container : container;
             maximumOpen = args.maximumOpen ? args.maximumOpen : maximumOpen;
+            opacityAnimationTimeout = args.opacityAnimationTimeout ? args.opacityAnimationTimeout : opacityAnimationTimeout;
         };
 
         notify.closeAll = function(){
