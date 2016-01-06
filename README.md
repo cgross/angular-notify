@@ -63,6 +63,9 @@ Call `config` to set the default configuration options for angular-notify.  The 
 * `position` - The default position of each message.  `center`, `left` and `right` are the supported values.
 * `container` - The default element that contains each notification.  Defaults to `document.body`.
 * `maximumOpen` - The maximum number of total notifications that can be visible at one time.  Older notifications will be closed when the maximum is reached.
+* `cleanupTimeout` - A timeout that cleans up the DOM after the message has faded out. This does not normally need to be set, but if you change the opacity transition duration
+in `.cg-notify-message` you may want to adjust this so that the message isn't suddenly
+removed before the fade-out transition is completed.
 
 ### notify.closeAll()
 
