@@ -22,6 +22,8 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
+            args.onClose = angular.isFunction(args.onClose) ? args.onClose : undefined;
+            args.onOpen = angular.isFunction(args.onOpen) ? args.onOpen : undefined;
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$position = args.position ? args.position : position;
@@ -40,7 +42,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
                 var templateElement = $compile(template)(scope);
                 templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
-                    if (e.propertyName === 'opacity' || e.currentTarget.style.opacity === 0 || 
+                    if (e.propertyName === 'opacity' || e.currentTarget.style.opacity === 0 ||
                         (e.originalEvent && e.originalEvent.propertyName === 'opacity')){
 
                         templateElement.remove();
@@ -77,6 +79,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 scope.$close = function(){
                     templateElement.css('opacity',0).attr('data-closing','true');
                     layoutMessages();
+
+                    if (angular.isDefined(args.onClose)) {
+                        args.onClose(scope.$message);
+                    }
                 };
 
                 var layoutMessages = function(){
@@ -107,12 +113,16 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     },args.duration);
                 }
 
+                if (angular.isDefined(args.onOpen)){
+                   args.onOpen(scope.$message);
+               }
+
             }).error(function(data){
                     throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
             });
 
             var retVal = {};
-            
+
             retVal.close = function(){
                 if (scope.$close){
                     scope.$close();
