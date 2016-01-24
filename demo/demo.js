@@ -16,7 +16,13 @@ angular.module('app').controller('DemoCtrl',function($scope,notify){
             classes: $scope.classes,
             templateUrl: $scope.template,
             position: $scope.position,
-            duration: $scope.duration
+            duration: $scope.duration,
+            onClose: function() {
+                console.log('onClose');
+            },
+            onOpen: function() {
+                console.log('onOpen');
+            }
         });
     };
 
@@ -35,7 +41,7 @@ angular.module('app').controller('DemoCtrl',function($scope,notify){
             scope:$scope,
             templateUrl: $scope.template,
             position: $scope.position,
-        });       
+        });
 
     };
 
