@@ -24,6 +24,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             args.classes = args.classes ? args.classes : '';
             args.onClose = angular.isFunction(args.onClose) ? args.onClose : undefined;
             args.onOpen = angular.isFunction(args.onOpen) ? args.onOpen : undefined;
+            args.onClick = angular.isFunction(args.onClick) ? args.onClick : undefined;
 
             var scope = args.scope ? args.scope.$new() : $rootScope.$new();
             scope.$position = args.position ? args.position : position;
@@ -85,7 +86,13 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     }
                 };
 
-                var layoutMessages = function(){
+                scope.$click = function() {
+                    if (angular.isDefined(args.onClick)) {
+                        args.onClick(scope.$message);
+                    }
+                };
+
+                var layoutMessages = function() {
                     var j = 0;
                     var currentY = startTop;
                     for(var i = messageElements.length - 1; i >= 0; i --){
