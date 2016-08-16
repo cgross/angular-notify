@@ -18,7 +18,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 args = {message:args};
             }
 
-            args.duration = args.duration ? args.duration : defaultDuration;
+            args.duration = !angular.isUndefined(args.duration) ? args.duration : defaultDuration;
             args.templateUrl = args.templateUrl ? args.templateUrl : defaultTemplateUrl;
             args.container = args.container ? args.container : container;
             args.classes = args.classes ? args.classes : '';
