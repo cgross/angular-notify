@@ -39,7 +39,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 }
             }
 
-            $http.get(args.templateUrl,{cache: $templateCache}).success(function(template){
+            $http.get(args.templateUrl,{cache: $templateCache}).then(function(template){
 
                 var templateElement = $compile(template)(scope);
                 templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
