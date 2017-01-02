@@ -124,7 +124,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                    args.onOpen(scope.$message);
                }
 
-            }).error(function(data){
+           }).catch(function(data){
                     throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
             });
 
