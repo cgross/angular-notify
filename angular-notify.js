@@ -41,7 +41,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
             $http.get(args.templateUrl,{cache: $templateCache}).then(function(template){
 
-                var templateElement = $compile(template)(scope);
+                var templateElement = $compile(template.data)(scope);
                 templateElement.bind('webkitTransitionEnd oTransitionEnd otransitionend transitionend msTransitionEnd', function(e){
                     if (e.propertyName === 'opacity' || e.currentTarget.style.opacity === 0 ||
                         (e.originalEvent && e.originalEvent.propertyName === 'opacity')){
