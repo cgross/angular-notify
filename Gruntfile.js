@@ -42,7 +42,8 @@ module.exports = function (grunt) {
     copy: {
       main: {
         files: [
-          {src:'angular-notify.css',dest:'dist/'}
+          {src:'angular-notify.css',dest:'dist/'},
+          {src:'index.js',dest:'dist/'}
         ]
       }
     },

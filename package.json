@@ -1,6 +1,7 @@
 {
-  "name": "angular-notify",
-  "version": "2.5.0",
+  "name": "@cgross/angular-notify",
+  "main":"dist/index.js",
+  "version": "2.5.1",
   "description": "A minimalistic notification service for angular.",
   "repository": {
     "type": "git",
