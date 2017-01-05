@@ -8,10 +8,11 @@ Supports IE 10, and recent versions of FF and Chrome.
 
 ## Getting Started
 
-Install with Bower or download the the files directly from the dist folder in the repo.
+Install with Bower, npm, or download the the files directly from the dist folder in the repo.
 
 ```bash
 bower install angular-notify --save
+npm install @cgross/angular-notify`
 ```
 
 Add `dist/angular-notify.js` and `dist/angular-notify.css` to your index.html.
@@ -78,6 +79,9 @@ The `messageTemplate` property is also included on the scope as `$messageTemplat
 
 
 ## Release History
+ * v2.5.1 - 01/05/2017
+   * Fixed for Angular 1.6 promise method changes.
+   * Published to NPM.
  * v2.5.0 - 04/12/2015
    * New `duration` property per notification.
    * New `position` property per notification.
