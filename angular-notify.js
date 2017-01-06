@@ -71,7 +71,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 if (scope.$position === 'center'){
                     $timeout(function(){
                         scope.$centerMargin = '-' + (templateElement[0].offsetWidth /2) + 'px';
-                    });
+                    }, 10 /* fixes safari mispositioned message */);
                 }
 
                 scope.$close = function(){
