@@ -32,13 +32,6 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
             scope.$classes = args.classes;
             scope.$messageTemplate = args.messageTemplate;
 
-            if (maximumOpen > 0) {
-                var numToClose = (openNotificationsScope.length + 1) - maximumOpen;
-                for (var i = 0; i < numToClose; i++) {
-                    openNotificationsScope[i].$close();
-                }
-            }
-
             $http.get(args.templateUrl,{cache: $templateCache}).then(function(template){
 
                 var templateElement = $compile(template.data)(scope);
@@ -72,7 +65,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 messageElements.push(templateElement);
 
                 if (scope.$position === 'center'){
-                    $timeout(function(){
+                    scope.$applyAsync(function(){
                         scope.$centerMargin = '-' + (templateElement[0].offsetWidth /2) + 'px';
                     });
                 }
@@ -92,7 +85,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     }
                 };
 
-                var layoutMessages = function() {
+                function layoutMessages() {
                     var j = 0;
                     var currentY = startTop;
                     for(var i = messageElements.length - 1; i >= 0; i --){
@@ -108,21 +101,29 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                         element.css('top',top + 'px').css('margin-top','-' + (height+shadowHeight) + 'px').css('visibility','visible');
                         j ++;
                     }
-                };
+                }
 
-                $timeout(function(){
+                scope.$applyAsync(function(){
                     layoutMessages();
                 });
 
                 if (args.duration > 0){
                     $timeout(function(){
                         scope.$close();
-                    },args.duration);
+                    },args.duration, false);
                 }
 
                 if (angular.isDefined(args.onOpen)){
-                   args.onOpen(scope.$message);
-               }
+                    args.onOpen(scope.$message);
+                }
+
+                if (maximumOpen > 0) {
+                    var numToClose = (openNotificationsScope.length + 1) - maximumOpen;
+                    for (var i = 0; i < numToClose; i++) {
+                        openNotificationsScope[i].$close();
+                    }
+                }
+                openNotificationsScope.push(scope);
 
            }).catch(function(data){
                     throw new Error('Template specified for cgNotify ('+args.templateUrl+') could not be loaded. ' + data);
@@ -144,8 +145,6 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     scope.$message = val;
                 }
             });
-
-            openNotificationsScope.push(scope);
 
             return retVal;
 
