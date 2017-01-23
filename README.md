@@ -12,7 +12,7 @@ Install with Bower, npm, or download the the files directly from the dist folder
 
 ```bash
 bower install angular-notify --save
-npm install @cgross/angular-notify`
+npm install @cgross/angular-notify
 ```
 
 Add `dist/angular-notify.js` and `dist/angular-notify.css` to your index.html.
