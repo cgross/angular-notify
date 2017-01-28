@@ -165,8 +165,7 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
     "    $position === 'right' ? 'cg-notify-message-right' : '']\"\n" +
     "    ng-style=\"{'margin-left': $centerMargin}\">\n" +
     "\n" +
-    "    <div ng-show=\"!$messageTemplate\">\n" +
-    "        {{$message}}\n" +
+    "    <div ng-show=\"!$messageTemplate\" ng-bind=\"$message\">        \n" +
     "    </div>\n" +
     "\n" +
     "    <div ng-show=\"$messageTemplate\" class=\"cg-notify-message-template\">\n" +
@@ -178,7 +177,7 @@ angular.module('cgNotify').run(['$templateCache', function($templateCache) {
     "        <span class=\"cg-notify-sr-only\">Close</span>\n" +
     "    </button>\n" +
     "\n" +
-    "</div>"
+    "</div>\n"
   );
 
 }]);
