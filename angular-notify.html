@@ -4,8 +4,7 @@
     $position === 'right' ? 'cg-notify-message-right' : '']"
     ng-style="{'margin-left': $centerMargin}">
 
-    <div ng-show="!$messageTemplate">
-        {{$message}}
+    <div ng-show="!$messageTemplate" ng-bind="$message">        
     </div>
 
     <div ng-show="$messageTemplate" class="cg-notify-message-template">
