@@ -1,4 +1,4 @@
-#angular-notify
+# angular-notify
 
 >A minimalistic (and extensible) notification service for Angular.
 
