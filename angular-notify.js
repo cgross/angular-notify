@@ -1,5 +1,5 @@
-angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','$templateCache','$rootScope',
-    function($timeout,$http,$compile,$templateCache,$rootScope){
+angular.module('cgNotify', []).factory('notify',['$interval','$http','$compile','$templateCache','$rootScope',
+    function($interval,$http,$compile,$templateCache,$rootScope){
 
         var startTop = 10;
         var verticalSpacing = 15;
@@ -69,9 +69,9 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 messageElements.push(templateElement);
 
                 if (scope.$position === 'center'){
-                    $timeout(function(){
+                    $interval(function(){
                         scope.$centerMargin = '-' + (templateElement[0].offsetWidth /2) + 'px';
-                    });
+                    },0,1);
                 }
 
                 scope.$close = function(){
@@ -97,14 +97,14 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     }
                 };
 
-                $timeout(function(){
+                $interval(function(){
                     layoutMessages();
-                });
+                },0,1);
 
                 if (args.duration > 0){
-                    $timeout(function(){
+                    $interval(function(){
                         scope.$close();
-                    },args.duration);
+                    },args.duration,1);
                 }
 
             }, function(data) {
