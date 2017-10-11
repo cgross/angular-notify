@@ -7,7 +7,6 @@
     "url": "git://github.com/cgross/angular-notify.git"
   },
   "scripts": {
-    "postinstall": "bower i",
     "test": "grunt test",
     "build": "grunt build",
     "start": "grunt serve"
