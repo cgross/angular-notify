@@ -82,6 +82,10 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 scope.$click = function() {
                     if (angular.isDefined(args.onClick)) {
                         args.onClick(scope.$message);
+
+                        if (args.onClickClose) {
+                            scope.$close();
+                        }
                     }
                 };
 
