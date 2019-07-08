@@ -6,11 +6,17 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
         var defaultDuration = 10000;
         var defaultTemplateUrl = 'angular-notify.html';
         var position = 'center';
-        var container = document.body;
         var maximumOpen = 0;
 
         var messageElements = [];
         var openNotificationsScope = [];
+
+        var ANIMATION_IN = 'notificationIn';
+        var ANIMATION_OUT = 'notificationOut';
+
+        var container = document.createElement('DIV');
+        container.className = 'proton-notification-template flex flex-column flex-items-center notifications-container';
+        document.body.appendChild(container);
 
         var notify = function(args){
 
@@ -42,7 +48,7 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                         templateElement.remove();
                         messageElements.splice(messageElements.indexOf(templateElement),1);
                         openNotificationsScope.splice(openNotificationsScope.indexOf(scope),1);
-                        layoutMessages();
+                        // layoutMessages();
                     }
                 });
 
@@ -71,12 +77,17 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                 }
 
                 scope.$close = function(){
-                    templateElement.css('opacity',0).attr('data-closing','true');
-                    layoutMessages();
+                    templateElement.removeClass(ANIMATION_IN);
+                    templateElement.addClass(ANIMATION_OUT);
+                    // layoutMessages();
 
                     if (angular.isDefined(args.onClose)) {
                         args.onClose(scope.$message);
                     }
+
+                    $timeout(function(){
+                        templateElement.remove();
+                    }, 3000, false);
                 };
 
                 scope.$click = function() {
@@ -89,27 +100,27 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
                     }
                 };
 
-                function layoutMessages() {
-                    var j = 0;
-                    var currentY = startTop;
-                    for(var i = messageElements.length - 1; i >= 0; i --){
-                        var shadowHeight = 10;
-                        var element = messageElements[i];
-                        var height = element[0].offsetHeight;
-                        var top = currentY + height + shadowHeight;
-                        if (element.attr('data-closing')){
-                            top += 20;
-                        } else {
-                            currentY += height + verticalSpacing;
-                        }
-                        element.css('top',top + 'px').css('margin-top','-' + (height+shadowHeight) + 'px').css('visibility','visible');
-                        j ++;
-                    }
-                }
+                // function layoutMessages() {
+                //     var j = 0;
+                //     var currentY = startTop;
+                //     for(var i = messageElements.length - 1; i >= 0; i --){
+                //         var shadowHeight = 10;
+                //         var element = messageElements[i];
+                //         var height = element[0].offsetHeight;
+                //         var top = currentY + height + shadowHeight;
+                //         if (element.attr('data-closing')){
+                //             top += 20;
+                //         } else {
+                //             currentY += height + verticalSpacing;
+                //         }
+                //         element.css('top',top + 'px').css('margin-top','-' + (height+shadowHeight) + 'px').css('visibility','visible');
+                //         j ++;
+                //     }
+                // }
 
-                scope.$applyAsync(function(){
-                    layoutMessages();
-                });
+                // scope.$applyAsync(function(){
+                //     layoutMessages();
+                // });
 
                 if (args.duration > 0){
                     $timeout(function(){
@@ -166,9 +177,12 @@ angular.module('cgNotify', []).factory('notify',['$timeout','$http','$compile','
 
         notify.closeAll = function(){
             for(var i = messageElements.length - 1; i >= 0; i --){
-                var element = messageElements[i];
-                element.css('opacity',0);
+                messageElements[i].addClass(ANIMATION_OUT);
             }
+
+            $timeout(function(){
+                container.empty();
+            }, 3000, false);
         };
 
         return notify;
